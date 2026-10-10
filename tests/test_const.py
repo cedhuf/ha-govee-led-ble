@@ -105,6 +105,29 @@ def test_h6076_profile_is_basic_and_fail_closed():
     assert profile.effect_grammar is None
 
 
+@pytest.mark.parametrize(
+    ("model", "segments", "whole_mask"),
+    [("H60A1", 14, 0x3FFF), ("H60A6", 13, 0x1FFF)],
+)
+def test_ceiling_light_candidates_are_static_and_manual_only(model, segments, whole_mask):
+    profile = MODEL_PROFILES[model]
+
+    assert profile.support_quality is SupportQuality.EXPERIMENTAL
+    assert profile.command_grammar == profile.status_grammar == "H617A"
+    assert profile.read_domains == profile.setup_required_read_domains == {ReadDomain.POWER}
+    assert profile.requires_notifications
+    assert profile.supports_rgb and profile.supports_color_temperature
+    assert (profile.min_color_temp_kelvin, profile.max_color_temp_kelvin) == (2700, 6500)
+    assert profile.supports_segments
+    assert (profile.segment_count, profile.segment_group_size) == (segments, 4)
+    assert profile.whole_device_mask == whole_mask
+    assert profile.effect_grammar is None
+    assert not profile.supports_scenes
+    assert not profile.supports_music_mode
+    assert model not in BLE_DISCOVERABLE_MODELS
+    assert model_from_ble_name(f"GVH{model[1:]}998B") is None
+
+
 def test_h6102_static_candidate_is_exact_and_manual_only():
     profile = MODEL_PROFILES["H6102"]
 

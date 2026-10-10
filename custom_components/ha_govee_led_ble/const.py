@@ -523,6 +523,43 @@ MODEL_PROFILES: dict[str, ModelProfile] = {
         whole_device_mask=0x007F,
         scene_catalogue_sku="H6076",
     ),
+    # Ceiling lights with a back light ring and a front panel, as addressed by
+    # the static segment command. Encrypted (v1). Readback past power is left
+    # off: segment pages carry four records, the H617A status root three.
+    "H60A1": ModelProfile(
+        "H60A1 Ceiling Light",
+        support_quality=SupportQuality.EXPERIMENTAL,
+        command_grammar="H617A",
+        status_grammar="H617A",
+        read_domains=frozenset({ReadDomain.POWER}),
+        setup_required_read_domains=frozenset({ReadDomain.POWER}),
+        supports_rgb=True,
+        supports_color_temperature=True,
+        min_color_temp_kelvin=2700,
+        max_color_temp_kelvin=6500,
+        # Segments 1-13 are the back light ring, segment 14 the front panel.
+        whole_device_mask=0x3FFF,
+        segment_count=14,
+        segment_group_size=4,
+        supports_segment_writes=True,
+    ),
+    "H60A6": ModelProfile(
+        "H60A6 Ceiling Light Pro",
+        support_quality=SupportQuality.EXPERIMENTAL,
+        command_grammar="H617A",
+        status_grammar="H617A",
+        read_domains=frozenset({ReadDomain.POWER}),
+        setup_required_read_domains=frozenset({ReadDomain.POWER}),
+        supports_rgb=True,
+        supports_color_temperature=True,
+        min_color_temp_kelvin=2700,
+        max_color_temp_kelvin=6500,
+        # Segments 1-12 are the back light ring, segment 13 the front panel.
+        whole_device_mask=0x1FFF,
+        segment_count=13,
+        segment_group_size=4,
+        supports_segment_writes=True,
+    ),
     "H6102": ModelProfile(
         "H6102 LED Strip",
         support_quality=SupportQuality.EXPERIMENTAL,
