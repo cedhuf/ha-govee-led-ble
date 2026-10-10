@@ -524,14 +524,14 @@ MODEL_PROFILES: dict[str, ModelProfile] = {
         scene_catalogue_sku="H6076",
     ),
     # Ceiling lights with a back light ring and a front panel, as addressed by
-    # the static segment command. Encrypted (v1). Readback past power is left
-    # off: segment pages carry four records, the H617A status root three.
+    # the static segment command. Encrypted (v1). Their AA A5 pages carry four
+    # records, hence their own status roots.
     "H60A1": ModelProfile(
         "H60A1 Ceiling Light",
         support_quality=SupportQuality.EXPERIMENTAL,
         command_grammar="H617A",
-        status_grammar="H617A",
-        read_domains=frozenset({ReadDomain.POWER}),
+        status_grammar="H60A1",
+        read_domains=frozenset({ReadDomain.POWER, ReadDomain.SEGMENTS}),
         setup_required_read_domains=frozenset({ReadDomain.POWER}),
         supports_rgb=True,
         supports_color_temperature=True,
@@ -547,8 +547,8 @@ MODEL_PROFILES: dict[str, ModelProfile] = {
         "H60A6 Ceiling Light Pro",
         support_quality=SupportQuality.EXPERIMENTAL,
         command_grammar="H617A",
-        status_grammar="H617A",
-        read_domains=frozenset({ReadDomain.POWER}),
+        status_grammar="H60A6",
+        read_domains=frozenset({ReadDomain.POWER, ReadDomain.SEGMENTS}),
         setup_required_read_domains=frozenset({ReadDomain.POWER}),
         supports_rgb=True,
         supports_color_temperature=True,

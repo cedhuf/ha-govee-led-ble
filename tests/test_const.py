@@ -113,8 +113,10 @@ def test_ceiling_light_candidates_are_static_and_manual_only(model, segments, wh
     profile = MODEL_PROFILES[model]
 
     assert profile.support_quality is SupportQuality.EXPERIMENTAL
-    assert profile.command_grammar == profile.status_grammar == "H617A"
-    assert profile.read_domains == profile.setup_required_read_domains == {ReadDomain.POWER}
+    assert profile.command_grammar == "H617A"
+    assert profile.status_grammar == model
+    assert profile.read_domains == {ReadDomain.POWER, ReadDomain.SEGMENTS}
+    assert profile.setup_required_read_domains == {ReadDomain.POWER}
     assert profile.requires_notifications
     assert profile.supports_rgb and profile.supports_color_temperature
     assert (profile.min_color_temp_kelvin, profile.max_color_temp_kelvin) == (2700, 6500)

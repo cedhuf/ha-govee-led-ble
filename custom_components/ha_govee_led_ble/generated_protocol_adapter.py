@@ -92,6 +92,14 @@ H6102StatusReply = cast(
     Any,
     import_module("custom_components.ha_govee_led_ble.generated_protocol.h6102_status_reply").H6102StatusReply,
 )
+H60a1StatusReply = cast(
+    Any,
+    import_module("custom_components.ha_govee_led_ble.generated_protocol.h60a1_status_reply").H60a1StatusReply,
+)
+H60a6StatusReply = cast(
+    Any,
+    import_module("custom_components.ha_govee_led_ble.generated_protocol.h60a6_status_reply").H60a6StatusReply,
+)
 DiyType03 = cast(
     Any,
     import_module("custom_components.ha_govee_led_ble.generated_protocol.diy_type03").DiyType03,
@@ -215,6 +223,8 @@ def _serialize_xor(root: Any, length: int = 20) -> bytes:
 
 _STATUS_ROOTS = {
     "H6102": ("h6102_status_reply", H6102StatusReply),
+    "H60A1": ("h60a1_status_reply", H60a1StatusReply),
+    "H60A6": ("h60a6_status_reply", H60a6StatusReply),
     "H6099": ("h6099_status_reply", H6099StatusReply),
     "H617A": ("status_reply", StatusReply),
     "H6199": ("h6199_status_reply", H6199StatusReply),
